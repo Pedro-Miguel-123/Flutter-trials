@@ -6,26 +6,55 @@ import 'package:to_do_app/constants/colors.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
   final padding = const EdgeInsets.symmetric(vertical: 50);
+  final isCollapsed = true;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
       child: Drawer(
           child: Container(
+            color: Theme.of(context).cardColor,
             child: Column(
               children: [
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 24),
-                    color: Theme.of(context).colorScheme.primary,
+                    width: double.infinity,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                     child: buildHeader(),
-                  )
+                  ),
+                  Spacer(),
+                  buildCollapseIcon(context, isCollapsed),
+                  const SizedBox(height: 12)
                   //listItemHome(context),
                   //listItemSettings(context)
               ],
             ),
           ),
         ),
+    );
+  }
+
+  Widget buildCollapseIcon(BuildContext context, bool isCollapsed) {
+    final icon = isCollapsed ? Icons.arrow_forward_ios : Icons.arrow_back_ios;
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        child: Container(
+          child: Row (
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(icon, color: Colors.black),
+              Padding(padding: EdgeInsets.only(right: 20))
+            ],
+          ) 
+        ),
+        onTap: () {
+          /**I'm not quite sure why this works to close the drawer 
+           * but it does
+          */
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 
@@ -38,7 +67,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         MaterialPageRoute(builder: (context) => Home())
         );
     },
-    child: Row(
+    child: const Row(
       children: const [
         Padding(padding: EdgeInsets.only(left: 10)),
         Icon(Icons.home, color: tdRed,),
@@ -71,11 +100,15 @@ class NavigationDrawerWidget extends StatelessWidget {
     )
   );
 
-  Widget buildHeader() => Container(
-      child: const Text('Multi-purpose APP',
+  Widget buildHeader() => const Row(
+    children: [
+      const SizedBox(width: 24),
+      Text('Multi-purpose APP',
         style: TextStyle(
-        fontSize: 25
-      ),
-    ),
+          fontSize: 25,
+          color: Colors.white38
+        ),
+      )
+    ],
   );
 }

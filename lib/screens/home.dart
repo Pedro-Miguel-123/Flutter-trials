@@ -27,10 +27,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary 
-    );
-
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: buildAppBar(),
@@ -44,7 +40,7 @@ class _HomeState extends State<Home> {
                   SearchBox(),
                   Expanded(
                     child: ListView(
-                      padding: EdgeInsets.only(bottom: 50),
+                      padding: EdgeInsets.only(top: 20, bottom: 50),
                       shrinkWrap: true,
                       children: [
                           Container(
@@ -53,7 +49,7 @@ class _HomeState extends State<Home> {
                                 bottom: 20
                                ),
                             child: const Text(
-                              'All To dos',
+                              'All To do\'s',
                                style: TextStyle(
                                 fontSize: 30,
                                  fontWeight: FontWeight.w500),
@@ -84,10 +80,10 @@ class _HomeState extends State<Home> {
                     ),
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      color: theme.cardColor,
                       boxShadow: const [BoxShadow(
                         offset: Offset(0.0, 0.0),
-                        blurRadius: 10.0,
+                        blurRadius: 5.0,
                         spreadRadius: 0.0
                       ),],
                       borderRadius: BorderRadius.circular(10)
@@ -108,7 +104,7 @@ class _HomeState extends State<Home> {
                   ),
                   child: IconButton(
                     style: IconButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                      backgroundColor: theme.colorScheme.onSurface,
                       minimumSize: Size(60, 60),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
                     ),
@@ -161,7 +157,7 @@ class _HomeState extends State<Home> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
+        color: Theme.of(context).colorScheme.onInverseSurface,
         borderRadius: BorderRadius.circular(20)
       ),
       child: TextField(

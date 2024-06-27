@@ -11,6 +11,7 @@ class ToDoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Container(
         padding: EdgeInsets.only(bottom: 20),
         child: ListTile(
@@ -19,17 +20,17 @@ class ToDoItem extends StatelessWidget {
           },
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          tileColor: Colors.white,
+          tileColor: theme.splashColor,
           leading: Icon(
             todo.isDone? Icons.check_box : Icons.check_box_outline_blank,
-            color: tdBlue,
+            color: theme.colorScheme.onSurface,
           ),
           title: Text(todo.toDoText!, style: TextStyle(fontSize: 16, color: tdBlack, decoration: todo.isDone? TextDecoration.lineThrough : null)),
           trailing: Container(
             height: 35,
             width: 35,
             decoration: BoxDecoration(
-              color: tdRed,
+              color: theme.colorScheme.error,
               borderRadius: BorderRadius.circular(5),
             ),
             child: IconButton(
