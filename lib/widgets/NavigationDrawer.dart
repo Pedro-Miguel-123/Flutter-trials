@@ -1,37 +1,52 @@
-
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/screens/camera_page.dart';
 import 'package:to_do_app/screens/home.dart';
 import 'package:to_do_app/screens/settings.dart';
-import 'package:to_do_app/constants/colors.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
-  final padding = const EdgeInsets.symmetric(vertical: 50);
-  final isCollapsed = true;
+  
+  final padding =  const EdgeInsets.symmetric(horizontal: 20);
 
+  const NavigationDrawerWidget({super.key});
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Drawer(
-          child: Container(
-            color: Theme.of(context).cardColor,
-            child: Column(
-              children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 24),
-                    width: double.infinity,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    child: buildHeader(),
+    const isCollapsed = false;
+
+    final safeArea = EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top);
+    return Drawer(
+        child: Container(
+          color: Theme.of(context).cardColor,
+          child: Column(
+            children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 24).add(safeArea),
+                  width: double.infinity,
+                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  child: buildHeader(context),
+                ),
+                SizedBox(
+                  height: 300,
+                  child: Column(
+                    
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Padding(padding: EdgeInsets.only(top: 30, left: 30),),
+                      listItemHome(context),
+                      listItemSettings(context),
+                      listItemCamera(context),
+                      listItemShare(context)
+                    ],
                   ),
-                  Spacer(),
-                  buildCollapseIcon(context, isCollapsed),
-                  const SizedBox(height: 12)
-                  //listItemHome(context),
-                  //listItemSettings(context)
-              ],
-            ),
+                ),
+                Spacer(),
+                buildCollapseIcon(context, isCollapsed),
+                const SizedBox(height: 12),
+            ],
           ),
         ),
-    );
+      );
   }
 
   Widget buildCollapseIcon(BuildContext context, bool isCollapsed) {
@@ -44,7 +59,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Icon(icon, color: Colors.black),
-              Padding(padding: EdgeInsets.only(right: 20))
+              const Padding(padding: EdgeInsets.only(right: 20))
             ],
           ) 
         ),
@@ -52,12 +67,49 @@ class NavigationDrawerWidget extends StatelessWidget {
           /**I'm not quite sure why this works to close the drawer 
            * but it does
           */
-          Navigator.pop(context);
+          isCollapsed = true;
+           Navigator.pop(context);
         },
       ),
     );
   }
 
+  Widget listItemShare(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {},
+      child: Row(
+        children: [
+          const Padding(padding: EdgeInsets.only(left: 10)),
+          Icon(Icons.share, color: Theme.of(context).colorScheme.primary,),
+          const Padding(padding: EdgeInsets.only(left: 15)),
+          const Text('Share', style: TextStyle(
+            fontSize: 20
+          ),)
+        ],
+      ),
+    );
+  }
+
+  Widget listItemCamera(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap:() async{
+              await availableCameras().then((value) => Navigator.push(context, 
+              MaterialPageRoute(builder: (_) => CameraPage(cameras: value))));
+            } ,
+      child: Row(
+        children: [
+          const Padding(padding: EdgeInsets.only(left: 10)),
+          Icon(Icons.camera, color: Theme.of(context).colorScheme.primary,),
+          const Padding(padding: EdgeInsets.only(left: 15)),
+          const Text('Camera', style: TextStyle(
+            fontSize: 20
+          ),)
+        ],
+      ),
+    );
+  }
   //Home button
   Widget listItemHome(BuildContext context) => GestureDetector(
     behavior: HitTestBehavior.opaque,
@@ -67,12 +119,12 @@ class NavigationDrawerWidget extends StatelessWidget {
         MaterialPageRoute(builder: (context) => Home())
         );
     },
-    child: const Row(
-      children: const [
-        Padding(padding: EdgeInsets.only(left: 10)),
-        Icon(Icons.home, color: tdRed,),
-        Padding(padding: EdgeInsets.only(left: 15)),
-        Text('Home', style: TextStyle(
+    child: Row(
+      children: [
+        const Padding(padding: EdgeInsets.only(left: 10)),
+        Icon(Icons.home, color: Theme.of(context).colorScheme.primary,),
+        const Padding(padding: EdgeInsets.only(left: 15)),
+        const Text('Home', style: TextStyle(
           fontSize: 20
         ),)
       ],
@@ -88,27 +140,29 @@ class NavigationDrawerWidget extends StatelessWidget {
         MaterialPageRoute(builder: (context) => Settings())
         );
     },
-    child: const Row(
+    child: Row(
       children: [
-        Padding(padding: EdgeInsets.only(left: 10)),
-        Icon(Icons.settings, color: tdRed,),
-        Padding(padding: EdgeInsets.only(left: 15)),
-        Text('Settings', style: TextStyle(
+        const Padding(padding: EdgeInsets.only(left: 10)),
+        Icon(Icons.settings, color: Theme.of(context).colorScheme.primary,),
+        const Padding(padding: EdgeInsets.only(left: 15)),
+        const Text('Settings', style: TextStyle(
           fontSize: 20
         ),)
       ],
     )
   );
 
-  Widget buildHeader() => const Row(
-    children: [
-      const SizedBox(width: 24),
-      Text('Multi-purpose APP',
-        style: TextStyle(
-          fontSize: 25,
-          color: Colors.white38
-        ),
-      )
-    ],
-  );
+  Widget buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        const SizedBox(width: 24),
+        Text('Multi-purpose APP',
+          style: TextStyle(
+            fontSize: 25,
+            color: Theme.of(context).colorScheme.primary
+          ),
+        )
+      ],
+    );
+  }
 }
