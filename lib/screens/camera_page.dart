@@ -1,7 +1,5 @@
-import 'dart:math';
 import 'package:to_do_app/screens/preview_page.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
