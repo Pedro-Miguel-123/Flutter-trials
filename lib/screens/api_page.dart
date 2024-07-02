@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/controllers/unsplashController.dart';
-import 'package:to_do_app/services/api_service.dart';
 import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
 import 'package:to_do_app/widgets/SearchBarCustom.dart';
@@ -63,8 +62,6 @@ class _APIPage extends State<APIPage> {
   }
 
   void _handleValueChanged(String value) {
-    setState(() {
-      _searchQuery = value;
-    });
+    _searchQuery = value;
   }
 }
