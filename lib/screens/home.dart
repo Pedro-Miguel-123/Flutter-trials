@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/models/to_do.dart';
 import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
+import 'package:to_do_app/widgets/SearchBarCustom.dart';
 import 'package:to_do_app/widgets/ToDoItem.dart';
 
 class Home extends StatefulWidget {
-  Home({ Key? key}) : super(key: key);
+  Home({Key? key}) : super(key: key);
 
   @override
   State<Home> createState() => _HomeState();
@@ -25,94 +26,82 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: buildAppBar(),
       body: Stack(
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: 
-              Column(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
                 children: [
-                  SearchBox(),
+                  SearchBarCustom(onValueChanged: (value) {
+                    _runFilter(value);
+                  }),
                   Expanded(
                     child: ListView(
                       padding: EdgeInsets.only(top: 20, bottom: 50),
                       shrinkWrap: true,
                       children: [
-                          Container(
-                            margin: const EdgeInsets.only(
-                                top: 50,
-                                bottom: 20
-                               ),
+                        Container(
+                            margin: const EdgeInsets.only(top: 50, bottom: 20),
                             child: const Text(
                               'All To do\'s',
-                               style: TextStyle(
-                                fontSize: 30,
-                                 fontWeight: FontWeight.w500),
-                                 )
+                              style: TextStyle(
+                                  fontSize: 30, fontWeight: FontWeight.w500),
+                            )),
+                        for (ToDo toDo in _foundToDo.reversed)
+                          ToDoItem(
+                            todo: toDo,
+                            onToDoChanged: _handleToDoChange,
+                            onDeleteItem: _deleteToDoItem,
                           ),
-                          for ( ToDo toDo in _foundToDo.reversed) 
-                            ToDoItem(
-                              todo: toDo,
-                              onToDoChanged: _handleToDoChange,
-                              onDeleteItem: _deleteToDoItem,  
-                            ),
                       ],
                     ),
                   )
                 ],
-              )
-          ),
+              )),
           Align(
             alignment: Alignment.bottomCenter,
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      bottom: 20,
-                      right: 20,
-                      left: 20
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
+                    child: Container(
+                  margin:
+                      const EdgeInsets.only(bottom: 20, right: 20, left: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  decoration: BoxDecoration(
                       color: theme.cardColor,
-                      boxShadow: const [BoxShadow(
-                        offset: Offset(0.0, 0.0),
-                        blurRadius: 5.0,
-                        spreadRadius: 0.0
-                      ),],
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    child: TextField(
-                      controller: _toDoController,
-                      decoration: InputDecoration(
+                      boxShadow: const [
+                        BoxShadow(
+                            offset: Offset(0.0, 0.0),
+                            blurRadius: 5.0,
+                            spreadRadius: 0.0),
+                      ],
+                      borderRadius: BorderRadius.circular(10)),
+                  child: TextField(
+                    controller: _toDoController,
+                    decoration: InputDecoration(
                         hintText: 'Add a new to do item',
-                        border: InputBorder.none
-                      ),
-                    ),
-                  )
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                    bottom: 20,
-                    right: 20
+                        border: InputBorder.none),
                   ),
-                  child: IconButton(
-                    style: IconButton.styleFrom(
-                      backgroundColor: theme.colorScheme.onSurface,
-                      minimumSize: Size(60, 60),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                    ),
-                    onPressed: () {
-                      _addToDoItem(_toDoController.text);
-                    },
-                    icon: Icon(Icons.add, color: Colors.white,)
-                  )
-                )
+                )),
+                Container(
+                    margin: EdgeInsets.only(bottom: 20, right: 20),
+                    child: IconButton(
+                        style: IconButton.styleFrom(
+                            backgroundColor: theme.colorScheme.onSurface,
+                            minimumSize: Size(60, 60),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10))),
+                        onPressed: () {
+                          _addToDoItem(_toDoController.text);
+                        },
+                        icon: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        )))
               ],
             ),
           )
@@ -120,6 +109,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   void _handleToDoChange(ToDo todo) {
     setState(() {
       todo.isDone = !todo.isDone;
@@ -134,7 +124,8 @@ class _HomeState extends State<Home> {
 
   void _addToDoItem(String todo) {
     setState(() {
-      todosList.add(ToDo(id: DateTime.now().millisecond.toString(), toDoText: todo));
+      todosList
+          .add(ToDo(id: DateTime.now().millisecond.toString(), toDoText: todo));
     });
     _toDoController.clear();
   }
@@ -144,7 +135,11 @@ class _HomeState extends State<Home> {
     if (enteredKeyword.isEmpty) {
       results = todosList;
     } else {
-      results = todosList.where((item) => item.toDoText!.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+      results = todosList
+          .where((item) => item.toDoText!
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
     }
 
     setState(() {
@@ -156,9 +151,8 @@ class _HomeState extends State<Home> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.onInverseSurface,
-        borderRadius: BorderRadius.circular(20)
-      ),
+          color: Theme.of(context).colorScheme.onInverseSurface,
+          borderRadius: BorderRadius.circular(20)),
       child: TextField(
         onChanged: (value) => _runFilter(value),
         decoration: const InputDecoration(
