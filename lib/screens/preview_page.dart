@@ -6,14 +6,14 @@ import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
 
 class PreviewPage extends StatelessWidget {
-  const PreviewPage({Key? key, required this.picture}) : super(key: key);
+  const PreviewPage({super.key, required this.picture});
 
   final XFile picture;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: NavigationDrawerWidget(),
+        drawer: const NavigationDrawerWidget(),
         appBar: buildAppBar(),
         body: Center(
             child: Column(

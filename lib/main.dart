@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/screens/home.dart';
+
 void main() {
   runApp(const MainApp());
 }
@@ -13,10 +14,9 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'To Do App',
       theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)
-      ),
-      home: Home(),
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)),
+      home: const Home(),
     );
   }
 }

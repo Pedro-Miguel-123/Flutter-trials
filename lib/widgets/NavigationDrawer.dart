@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/screens/api_page.dart';
@@ -56,14 +58,13 @@ class NavigationDrawerWidget extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        child: Container(
-            child: Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Icon(icon, color: Colors.black),
             const Padding(padding: EdgeInsets.only(right: 20))
           ],
-        )),
+        ),
         onTap: () {
           /**I'm not quite sure why this works to close the drawer 
            * but it does

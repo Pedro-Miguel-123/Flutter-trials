@@ -39,7 +39,6 @@ class _APIPage extends State<APIPage> {
                 label: const Text("Search"),
                 onPressed: () {
                   sendApiRequest(_searchQuery);
-                  print("SEARCHED FOR ---> $_searchQuery");
                 },
                 icon: Icon(Icons.search, color: theme.primaryColor),
               ),

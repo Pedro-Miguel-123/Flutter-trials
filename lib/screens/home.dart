@@ -6,7 +6,7 @@ import 'package:to_do_app/widgets/SearchBarCustom.dart';
 import 'package:to_do_app/widgets/ToDoItem.dart';
 
 class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
       appBar: buildAppBar(),
       body: Stack(
         children: [
@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
                   }),
                   Expanded(
                     child: ListView(
-                      padding: EdgeInsets.only(top: 20, bottom: 50),
+                      padding: const EdgeInsets.only(top: 20, bottom: 50),
                       shrinkWrap: true,
                       children: [
                         Container(
@@ -70,7 +70,8 @@ class _HomeState extends State<Home> {
                     child: Container(
                   margin:
                       const EdgeInsets.only(bottom: 20, right: 20, left: 20),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   decoration: BoxDecoration(
                       color: theme.cardColor,
                       boxShadow: const [
@@ -82,23 +83,23 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(10)),
                   child: TextField(
                     controller: _toDoController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: 'Add a new to do item',
                         border: InputBorder.none),
                   ),
                 )),
                 Container(
-                    margin: EdgeInsets.only(bottom: 20, right: 20),
+                    margin: const EdgeInsets.only(bottom: 20, right: 20),
                     child: IconButton(
                         style: IconButton.styleFrom(
                             backgroundColor: theme.colorScheme.onSurface,
-                            minimumSize: Size(60, 60),
+                            minimumSize: const Size(60, 60),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
                         onPressed: () {
                           _addToDoItem(_toDoController.text);
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                           color: Colors.white,
                         )))
@@ -149,7 +150,7 @@ class _HomeState extends State<Home> {
 
   Widget SearchBox() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.onInverseSurface,
           borderRadius: BorderRadius.circular(20)),
