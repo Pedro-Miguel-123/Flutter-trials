@@ -13,8 +13,8 @@ class PreviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: const NavigationDrawerWidget(),
-        appBar: buildAppBar(),
+        drawer: NavigationDrawerWidget(),
+        appBar: buildAppBar(context),
         body: Center(
             child: Column(
           mainAxisSize: MainAxisSize.min,

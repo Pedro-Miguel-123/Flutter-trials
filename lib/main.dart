@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/providers/theme_provider.dart';
 import 'package:to_do_app/screens/home.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+    child: const MainApp(),
+  ));
 }
 
 class MainApp extends StatelessWidget {
@@ -13,9 +18,8 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'To Do App',
-      theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange)),
+      theme: Provider.of<ThemeProvider>(context).themeDataStyle,
+      themeMode: ThemeMode.system,
       home: const Home(),
     );
   }

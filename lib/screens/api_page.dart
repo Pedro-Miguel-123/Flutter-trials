@@ -25,9 +25,9 @@ class _APIPage extends State<APIPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-        drawer: const NavigationDrawerWidget(),
+        drawer: NavigationDrawerWidget(),
         backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: buildAppBar(),
+        appBar: buildAppBar(context),
         body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_app/constants/theme.dart';
 import 'package:to_do_app/models/to_do.dart';
+import 'package:to_do_app/providers/theme_provider.dart';
 import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
 import 'package:to_do_app/widgets/SearchBarCustom.dart';
@@ -25,11 +28,12 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     final theme = Theme.of(context);
 
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
-      appBar: buildAppBar(),
+      appBar: buildAppBar(context),
       body: Stack(
         children: [
           Container(
@@ -39,6 +43,14 @@ class _HomeState extends State<Home> {
                   SearchBarCustom(onValueChanged: (value) {
                     _runFilter(value);
                   }),
+                  Switch(
+                    value: themeProvider.themeDataStyle == MyAppThemes.darkTheme
+                        ? true
+                        : false,
+                    onChanged: (isOn) {
+                      themeProvider.changeTheme();
+                    },
+                  ),
                   Expanded(
                     child: ListView(
                       padding: const EdgeInsets.only(top: 20, bottom: 50),
@@ -92,7 +104,7 @@ class _HomeState extends State<Home> {
                     margin: const EdgeInsets.only(bottom: 20, right: 20),
                     child: IconButton(
                         style: IconButton.styleFrom(
-                            backgroundColor: theme.colorScheme.onSurface,
+                            backgroundColor: theme.primaryColor,
                             minimumSize: const Size(60, 60),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10))),
@@ -152,7 +164,7 @@ class _HomeState extends State<Home> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onInverseSurface,
+          color: Theme.of(context).colorScheme.secondary,
           borderRadius: BorderRadius.circular(20)),
       child: TextField(
         onChanged: (value) => _runFilter(value),

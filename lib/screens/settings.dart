@@ -8,7 +8,7 @@ import 'package:to_do_app/widgets/BuildAppBar.dart';
 import 'package:to_do_app/widgets/NavigationDrawer.dart';
 
 class Settings extends StatelessWidget {
-  Settings({Key? key}) : super(key: key);
+  const Settings({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class Settings extends StatelessWidget {
     return Scaffold(
         drawer: NavigationDrawerWidget(),
         backgroundColor: theme.scaffoldBackgroundColor,
-        appBar: buildAppBar(),
+        appBar: buildAppBar(context),
         body: SizedBox(
           width: double.infinity,
           child: Column(

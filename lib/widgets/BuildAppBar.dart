@@ -1,13 +1,12 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-import 'package:to_do_app/constants/colors.dart';
 
-AppBar buildAppBar() {
+/// TODO: Try and make this a StatefulWidget to be able to have a class and change the themes
+AppBar buildAppBar(BuildContext context) {
   return AppBar(
-    backgroundColor: tdBGColor,
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
     title: Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
           height: 40,

@@ -66,8 +66,8 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-      appBar: buildAppBar(),
+      drawer: NavigationDrawerWidget(),
+      appBar: buildAppBar(context),
       body: SafeArea(
           child: Stack(
         children: [
