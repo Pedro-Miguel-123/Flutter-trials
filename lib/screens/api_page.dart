@@ -17,7 +17,7 @@ class _APIPage extends State<APIPage> {
 
   @override
   void initState() {
-    _image = Image.asset('assets/images/avatar.jpeg');
+    _image = Image.asset('assets/images/nando.jpeg');
     super.initState();
   }
 
@@ -25,10 +25,10 @@ class _APIPage extends State<APIPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-        drawer: NavigationDrawerWidget(),
+        drawer: const NavigationDrawerWidget(),
         backgroundColor: theme.scaffoldBackgroundColor,
         appBar: buildAppBar(context),
-        body: Container(
+        body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: Column(
             children: [
